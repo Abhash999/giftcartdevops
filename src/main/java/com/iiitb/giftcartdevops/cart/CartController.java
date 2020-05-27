@@ -4,6 +4,9 @@ package com.iiitb.giftcartdevops.cart;
 //import com.project.giftkart.customer.Customer;
 import com.iiitb.giftcartdevops.customer.Customer;
 import com.iiitb.giftcartdevops.product.Product;
+import com.iiitb.giftcartdevops.product.ProductController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +19,9 @@ public class CartController {
 
     @Autowired
     private CartService cartService;
+
+    Logger logger = LogManager.getLogger(ProductController.class);
+
 
     @RequestMapping("/customer/{customer_id}/cart")
     public List<Cart> getProducts(@PathVariable Integer customer_id) {
@@ -32,6 +38,8 @@ public class CartController {
             //CartId cartId = new CartId(customer_id,product_id);
             //cart.setId(cartId);
             cartService.addProduct(cart);
+            logger.info("product was added to cart.");
+
         }
 
     /*@RequestMapping(method = RequestMethod.PUT, value = "/customer/{customer_id}/address/{id}")

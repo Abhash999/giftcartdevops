@@ -1,6 +1,9 @@
 package com.iiitb.giftcartdevops.customer;
 
 import com.iiitb.giftcartdevops.address.Address;
+import com.iiitb.giftcartdevops.product.ProductController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,17 +17,27 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    Logger logger = LogManager.getLogger(ProductController.class);
+
+
     @RequestMapping("/home/{email}/{password}")
     public Customer getCustomerByEmail(@PathVariable  String email,@PathVariable String password) {
         Customer customer = customerService.getCustomerByEmail(email);
         if(customer!=null) {
-            if (customer.password.compareTo(password) == 0)
+            if (customer.password.compareTo(password) == 0) {
+                logger.info("customer logged in");
                 return customer;
-            else
+            }
+            else {
+                logger.warn("False login attemped.");
+
                 return null;
+            }
         }
-        else
+        else {
+            logger.warn("False login attemped.");
             return null;
+        }
     }
 
     @RequestMapping("/customer")
@@ -41,10 +54,13 @@ public class CustomerController {
         public void addCustomerByID(@RequestBody Customer customer) throws Exception {
             Customer check = customerService.getCustomerByEmail(customer.email);
             if(check==null) {
+                logger.info("A new customer was successfully created.");
+
                 customerService.addCustomer(customer);
             }
             else
             {
+                logger.warn("user already exists");
                 throw new Exception("Username exists");
             }
         }
@@ -53,10 +69,12 @@ public class CustomerController {
     public void updateCustomerByID(@RequestBody Customer customer, @PathVariable Integer id) throws Exception {
         Optional<Customer> check = customerService.getCustomer(id);
         if(check==null) {
+            logger.warn("no customer with id : "+id+" exists.");
             throw new Exception("Username does not exist");
         }
         else
         {
+            logger.info("customer details succesfully updated.");
             customerService.updateCustomer(id,customer);
         }
 
@@ -68,9 +86,12 @@ public class CustomerController {
         Optional<Customer> check = customerService.getCustomer(id);
         if(check == null)
         {
+            logger.warn("attempt to delete non existent customer");
             throw new Exception("User does not exist");
         }
-        else
-        customerService.deleteCustomer(id);
+        else {
+            logger.info("Customer deleted.");
+            customerService.deleteCustomer(id);
+        }
     }
 }

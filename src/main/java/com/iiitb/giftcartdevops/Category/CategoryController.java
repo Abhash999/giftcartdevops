@@ -1,6 +1,9 @@
 package com.iiitb.giftcartdevops.Category;
 
 import com.iiitb.giftcartdevops.customer.Customer;
+import com.iiitb.giftcartdevops.product.ProductController;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +16,10 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
-  @RequestMapping("/categories")
+    Logger logger = LogManager.getLogger(ProductController.class);
+
+
+    @RequestMapping("/categories")
   public List<Category> getAllCategories(){
       return categoryService.getAllCategories();
   }
@@ -28,9 +34,12 @@ public class CategoryController {
       Category check = categoryService.getCategoryByName(category.name);
       if(check==null) {
           categoryService.addCategory(category);
+          logger.info("new category was added");
+
       }
       else
       {
+          logger.info("category already existed");
           throw new Exception("Category Exists");
       }
   }
