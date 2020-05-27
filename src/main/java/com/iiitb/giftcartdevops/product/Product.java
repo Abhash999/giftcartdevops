@@ -8,13 +8,13 @@ import javax.persistence.*;
 public class Product {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer product_id;
-    private String name;
-    private Double price;
-    private String description;
-    private String thumbnail;
-    private String image;
-    private Integer numItems;
+    Integer product_id;
+    String name;
+    Double price;
+    String description;
+    String thumbnail;
+    String image;
+    Integer numItems;
 
     @ManyToOne
     private Category category;

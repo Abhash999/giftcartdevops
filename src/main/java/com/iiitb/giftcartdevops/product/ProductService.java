@@ -1,5 +1,6 @@
 package com.iiitb.giftcartdevops.product;
 
+import com.iiitb.giftcartdevops.Category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +44,10 @@ public class ProductService {
         List<Product> products=new ArrayList<>();
         productRepository.findAll().forEach(products::add);
         return products;
+    }
+
+    public Product getProductDescription(String description){
+        Product product = productRepository.findProductByDescription(description);
+        return product;
     }
 }

@@ -33,8 +33,11 @@ public class CategoryService {
        categoryRepository.save(category);
     }
 
-
     public void deleteCategory(Integer id) {
         categoryRepository.deleteById(id);
+    }
+
+    public Category getCategoryByName(String name) {
+        return categoryRepository.findByName(name);
     }
 }

@@ -1,5 +1,6 @@
 package com.iiitb.giftcartdevops.Category;
 
+import com.iiitb.giftcartdevops.customer.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +24,15 @@ public class CategoryController {
   }
 
   @RequestMapping(method = RequestMethod.POST,value = "/categories")
-  public void addCategories(@RequestBody Category category){
-      categoryService.addCategory(category);
+  public void addCategories(@RequestBody Category category) throws Exception {
+      Category check = categoryService.getCategoryByName(category.name);
+      if(check==null) {
+          categoryService.addCategory(category);
+      }
+      else
+      {
+          throw new Exception("Category Exists");
+      }
   }
 
 

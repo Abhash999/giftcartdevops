@@ -9,9 +9,9 @@ import javax.persistence.Id;
 public class Category {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
-    private String description;
+    Integer id;
+    String name;
+    String description;
 
 
 
