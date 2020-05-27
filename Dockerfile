@@ -1,6 +1,7 @@
-FROM tomcat:8.0
+FROM openjdk:8-alpine
 
-RUN apt update
-COPY target/giftcartdevops-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/giftcartdevops-0.0.1-SNAPSHOT.war
-EXPOSE 4000
-CMD["catalina.sh","run"]
+RUN apk update
+RUN apk add maven
+COPY target/giftcartdevops-0.0.1-SNAPSHOT.war /usr/local/gifttkart/target/giftcartdevops-0.0.1-SNAPSHOT.war
+WORKDIR /usr/local/giftkart
+CMD ["java","jar","giftcartdevops-0.0.1-SNAPSHOT.war"]
