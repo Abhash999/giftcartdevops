@@ -8,6 +8,7 @@ class GiftcartdevopsApplicationTests {
 
     @Test
     void contextLoads() {
+        assert(true);
     }
 
 }
