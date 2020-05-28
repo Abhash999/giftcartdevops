@@ -5,9 +5,12 @@ import com.iiitb.giftcartdevops.product.ProductController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.xml.ws.http.HTTPException;
+import java.net.URI;
+//import javax.xml.ws.http.HTTPException;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,12 +54,19 @@ public class CustomerController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/customer")
-        public void addCustomerByID(@RequestBody Customer customer) throws Exception {
+        public ResponseEntity<Customer> addCustomerByID(@RequestBody Customer customer) throws Exception {
             Customer check = customerService.getCustomerByEmail(customer.email);
             if(check==null) {
-                logger.info("A new customer was successfully created.");
-
+                
                 customerService.addCustomer(customer);
+                logger.info("A new customer was successfully created.");
+                
+                URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
+        				"/{id}").buildAndExpand(customer.getId()).toUri();
+                             
+                return ResponseEntity.created(location).build();
+                //return ResponseEntity.noContent().build();
+                
             }
             else
             {
