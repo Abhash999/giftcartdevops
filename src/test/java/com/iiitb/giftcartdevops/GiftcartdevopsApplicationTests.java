@@ -2,8 +2,8 @@ package com.iiitb.giftcartdevops;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-@SpringBootTest
+@ExtendWith(SpringExtension.class)
+//@SpringBootTest
 class GiftcartdevopsApplicationTests {
 
     @Test
