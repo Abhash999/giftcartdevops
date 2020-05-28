@@ -4082,16 +4082,6 @@ textarea.input-group-sm>.input-group-btn>.btn {
     clear: both
 }
 
-.nav:before,
-.nav:after {
-    display: table;
-    content: " "
-}
-
-.nav:after {
-    clear: both
-}
-
 .nav>li {
     position: relative;
     display: block
@@ -4222,7 +4212,10 @@ textarea.input-group-sm>.input-group-btn>.btn {
 }
 
 .nav-pills>li {
-    float: left
+    float: none;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none
 }
 
 .nav-pills>li>a {
@@ -4270,7 +4263,7 @@ textarea.input-group-sm>.input-group-btn>.btn {
 @media(min-width:768px) {
     .nav-justified>li {
         display: table-cell;
-        width: 1%
+        width: 100%
     }
     .nav-justified>li>a {
         margin-bottom: 0
