@@ -5,8 +5,11 @@ import com.iiitb.giftcartdevops.product.ProductController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +33,15 @@ public class CategoryController {
   }
 
   @RequestMapping(method = RequestMethod.POST,value = "/categories")
-  public void addCategories(@RequestBody Category category) throws Exception {
+  public ResponseEntity<Category> addCategories(@RequestBody Category category) throws Exception {
       Category check = categoryService.getCategoryByName(category.name);
       if(check==null) {
           categoryService.addCategory(category);
           logger.info("new category was added");
+          
+          URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(
+    				"/{id}").buildAndExpand(category.getId()).toUri();
+            return ResponseEntity.created(location).build();
 
       }
       else
