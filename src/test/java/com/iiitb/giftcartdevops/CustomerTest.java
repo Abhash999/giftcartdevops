@@ -27,7 +27,7 @@ import com.iiitb.giftcartdevops.customer.CustomerController;
 import com.iiitb.giftcartdevops.customer.CustomerService;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(CustomerController.class)
+@WebMvcTest(controllers = CustomerController.class)
 class CustomerTest {
 
 	// @Test
